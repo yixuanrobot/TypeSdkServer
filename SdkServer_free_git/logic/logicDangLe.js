@@ -196,9 +196,7 @@ function callGamePay(attrs,gattrs,params,query,ret,retf,game,channel)
             request(options, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var retOut = body;
-
                     //日志记录CP端返回
-
                     if (typeof retOut.code == 'undefined'){
                         //打点：其他支付失败
                         logicCommon.sdkMonitorDot(logicCommon.dotType.PayDot.Error);

@@ -91,8 +91,8 @@ function callChannelLogin(attrs, matchAction, query, ret, callBack) {
             } else {
                 //打点：验证失败
                 logicCommon.sdkMonitorDot(logicCommon.dotType.LoginDot.ChVerifyErr);
-                ret.code = bodyData.status;
-                ret.msg = bodyData.message;
+                ret.code = 1;
+                ret.msg = "渠道正常返回，结果失败";
                 ret.value = bodyData;
             }
         } else {
@@ -179,7 +179,7 @@ function compareOrder(attrs,gattrs,params,query,ret,game,channel,retf){
     retValue.info = '';
     var retData = null;
     if(retValue.code!=0){
-        retData = getRetData('HENGXIANG_ORDER_ERROR');
+        retData = getRetData('ORDER_ERROR');
         retf(JSON.stringify(retData));
         return;
     }
@@ -288,7 +288,7 @@ function callGamePay(attrs, gattrs, params, query, ret, retf, game, channel, cha
     retValue.cporder = bodyData.cpOrderId;
     retValue.info = '';
     if(retValue.code!=0){
-        retData = getRetData('HENGXIANG_ORDER_ERROR');
+        retData = getRetData('ORDER_ERROR');
         retf(JSON.stringify(retData));
         return;
     }
@@ -360,33 +360,33 @@ function callGamePay(attrs, gattrs, params, query, ret, retf, game, channel, cha
 
 function getRetData (msg){
     var temp = {
-        status:0,
-        message: ''
+        code:0,
+        msg: ''
     };
     switch (msg){
         case 'SUCCESS':
-            temp.status = 1000;
-            temp.message = 'SUCCESS';
+            temp.code = 0;
+            temp.msg = 'SUCCESS';
             break;
         case 'NO_ORDER':
-            temp.status = 1001;
-            temp.message = '订单不存在';
+            temp.code = 1;
+            temp.msg = '订单不存在';
             break;
         case 'VERIFY_ORDER_ERROR':
-            temp.status = 1002;
-            temp.message = '订单校验异常';
+            temp.code = 1;
+            temp.msg = '订单校验异常';
             break;
-        case 'HENGXIANG_ORDER_ERROR':
-            temp.status = 1003;
-            temp.message = '横象支付中心订单异常';
+        case 'ORDER_ERROR':
+            temp.code = 1;
+            temp.msg = '支付中心订单异常';
             break;
         case 'NOTIFY_ORDER_ERROR':
-            temp.status = 1004;
-            temp.message = '订单通知游戏服异常';
+            temp.code = 1;
+            temp.msg = '订单通知游戏服异常';
             break;
         case 'FAILURE':
-            temp.status = 1005;
-            temp.message = '未处理异常';
+            temp.code = 1;
+            temp.msg = '未处理异常';
             break;
         default :
             break

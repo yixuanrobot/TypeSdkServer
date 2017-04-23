@@ -1,12 +1,12 @@
 /**
- * Created by TypeSDK on 2016/12/26.
+ *  * Created by TypeSDK on 2017/1/7.
  */
 
 var crypto = require('crypto');
 var request = require('request');
 var merge = require('merge');
 var logicCommon = require('./logicCommon.js');
-var urlencode= require("urlencode");
+var urldecode= require("urldecode");
 
 function convertParamLogin(query,ret)
 {

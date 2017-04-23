@@ -11,7 +11,7 @@ log4js.configure({
 			absolute: true,
 			filename: '../logs/console.log',
 			maxLogSize: 1024 * 1024,
-			backups: 3,
+			backups: 10,
 			category: 'console',
 			layout: {
 				type: 'pattern',
@@ -34,7 +34,7 @@ log4js.configure({
 			absolute: true,
 			filename: '../logs/sdk',
 			maxLogSize: 1024 * 1024,
-			backups: 3,
+			backups: 10,
 			pattern: "_yyyy-MM-dd.log",
 			alwaysIncludePattern: true,
 			category: 'sdk'

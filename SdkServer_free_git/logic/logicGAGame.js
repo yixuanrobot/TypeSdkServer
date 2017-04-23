@@ -179,7 +179,7 @@ function compareOrder(attrs, gattrs, params, query, ret, game, channel, retf) {
     retValue.info = '';
 
     var retData = null;
-    //  横向渠道的订单状态：3（订单成功）其他的为订单失败
+    //  渠道的订单状态：3（订单成功）其他的为订单失败
     if (retValue.code !=0) {
         retData = getRetData('HENGXIANG_ORDER_ERROR');
         retf(JSON.stringify(retData));
@@ -223,8 +223,8 @@ function compareOrder(attrs, gattrs, params, query, ret, game, channel, retf) {
                         if(retOut.Itemid){
                             logicCommon.mapItemLists(attrs,retOut);
                         }
-                        if (bodyData.amount * 100 <= retOut.amount
-                                && bodyData.amount * 100 >= retOut.amount * 0.9) {
+                        if (bodyData.amount <= retOut.amount
+                                && bodyData.amount >= retOut.amount * 0.9) {
                             console.log('1');
                             if (retOut.status == '2') {
                                 retData = getRetData('VERIFY_ORDER_ERROR');
@@ -314,7 +314,7 @@ function callGamePay(attrs, gattrs, params, query, ret, retf, game, channel, cha
             retValue.gamename = game;
             retValue.sdkname = channel;
             retValue.channel_id = channelId;
-            retValue.amount = '' + bodyData.amount * 100 + '';
+            retValue.amount = '' + bodyData.amount + '';
 
 
             var options = {
@@ -376,39 +376,39 @@ function checkOrder() {
 }
 
 function getRetData (msg){
-    var temp = {
-        status:0,
-        message: ''
-    };
-    switch (msg){
-        case 'SUCCESS':
-            temp.status = 1000;
-            temp.message = 'SUCCESS';
-            break;
-        case 'NO_ORDER':
-            temp.status = 1001;
-            temp.message = '订单不存在';
-            break;
-        case 'VERIFY_ORDER_ERROR':
-            temp.status = 1002;
-            temp.message = '订单校验异常';
-            break;
-        case 'HENGXIANG_ORDER_ERROR':
-            temp.status = 1003;
-            temp.message = '横象支付中心订单异常';
-            break;
-        case 'NOTIFY_ORDER_ERROR':
-            temp.status = 1004;
-            temp.message = '订单通知游戏服异常';
-            break;
-        case 'FAILURE':
-            temp.status = 1005;
-            temp.message = '未处理异常';
-            break;
-        default :
-            break
-    }
-    return temp;
+  var temp = {
+    code:0,
+    msg: ''
+  };
+  switch (msg){
+    case 'SUCCESS':
+      temp.code = 0;
+      temp.msg = 'SUCCESS';
+      break;
+    case 'NO_ORDER':
+      temp.code = 1;
+      temp.msg = '订单不存在';
+      break;
+    case 'VERIFY_ORDER_ERROR':
+      temp.code = 1;
+      temp.msg = '订单校验异常';
+      break;
+    case 'ORDER_ERROR':
+      temp.code = 1;
+      temp.msg = '支付中心订单异常';
+      break;
+    case 'NOTIFY_ORDER_ERROR':
+      temp.code = 1;
+      temp.msg = '订单通知游戏服异常';
+      break;
+    case 'FAILURE':
+      temp.code = 1;
+      temp.msg = '未处理异常';
+      break;
+    default :
+      break
+  }
+  return temp;
 }
 
 /**
