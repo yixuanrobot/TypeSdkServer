@@ -140,7 +140,7 @@ function checkSignPay(attrs, query) {
             strCpOrderId +
             'orderId=' + queryData.orderId +
             'orderStatus=' + queryData.orderStatus +
-            attrs.app_key;
+            attrs.secret_key;
     console.log(signStr);
 
     var osign = crypto.createHash('md5').update(signStr).digest('hex');
@@ -191,7 +191,7 @@ function compareOrder(attrs,gattrs,params,query,ret,game,channel,retf){
         } else {
 
             retValue.sign = logicCommon.createSignPay(retValue, gattrs.gkey);
-            logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 1,parseInt( bodyData.amount)*100, query);
+            logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 1,parseInt( bodyData.amount), query);
 
             var options = {
                 url: params.verifyurl,
@@ -217,21 +217,21 @@ function compareOrder(attrs,gattrs,params,query,ret,game,channel,retf){
                         if(retOut.Itemid){
                             logicCommon.mapItemLists(attrs,retOut);
                         }
-                        if (bodyData.amount * 100 <= retOut.amount
-                            && bodyData.amount * 100 >= retOut.amount * 0.9) {
+                        if (bodyData.amount  <= retOut.amount
+                            && bodyData.amount >= retOut.amount * 0.9) {
                             console.log('1');
                             if (retOut.status == '2') {
                                 retData = getRetData('VERIFY_ORDER_ERROR');
                                 retf(JSON.stringify(retData));
                                 return;
                             } else if (retOut.status == '4' || retOut.status == '3') {
-                                logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 4,parseInt( bodyData.amount)*100);
+                                logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 4,parseInt( bodyData.amount));
                                 retData = getRetData('VERIFY_ORDER_ERROR');
                                 retf(JSON.stringify(retData));
                                 return;
                             } else {
                                 console.log('3');
-                                logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 2,parseInt( bodyData.amount)*100);
+                                logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 2,parseInt( bodyData.amount));
                                 var data = {};
                                 data.code = '0000';
                                 data.msg = 'NORMAL';
@@ -240,7 +240,7 @@ function compareOrder(attrs,gattrs,params,query,ret,game,channel,retf){
                             }
                         } else {
                             console.log('2');
-                            logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 3,parseInt( bodyData.amount)*100);
+                            logicCommon.UpdateOrderStatus(game, channel, retValue.cporder, retValue.order, 3,parseInt( bodyData.amount));
                             retData = getRetData('VERIFY_ORDER_ERROR');
                             retf(JSON.stringify(retData));
                             return;
@@ -306,7 +306,7 @@ function callGamePay(attrs, gattrs, params, query, ret, retf, game, channel, cha
             retValue.gamename = game;
             retValue.sdkname = channel;
             retValue.channel_id = channelId;
-            retValue.amount = '' + bodyData.amount * 100 + '';
+            retValue.amount = '' + bodyData.amount + '';
 
 
             var options = {

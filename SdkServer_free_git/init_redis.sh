@@ -76,6 +76,6 @@ valueGAGameAppStore='{"id":"202","name":"GAGameAppStore","attrs":{"app_id":"1003
 redis-cli -h $RedisIP -p $RedisPort -a $RedisPWD hset GAME:$gameid:CHANNEL $fieldGAGameAppStore $valueGAGameAppStore
 #TypeChanell海外IOS渠道
 fieldGAGameAppStoreHW='ch203'
-valueGAGameAppStoreHW='{"id":"203","name":"GAGameAppStore","attrs":{"app_id":"100321","app_key":"a8e4324b1b7d6c0e8a9978a0e62cb824","channel_id":"203","sdk_name":"GAGameAppStore","itemLists":[]}}'
+valueGAGameAppStoreHW='{"id":"203","name":"GAGameAppStore","attrs":{"app_id":"100321","app_key":"a8e4324b1b7d6c0e8a9978a0e62cb824","channel_id":"203","sdk_name":"GAGameAppStore","itemLists":[}}'
 redis-cli -h $RedisIP -p $RedisPort -a $RedisPWD hset GAME:$gameid:CHANNEL $fieldGAGameAppStoreHW $valueGAGameAppStoreHW
 
