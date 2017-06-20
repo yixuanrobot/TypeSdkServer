@@ -94,7 +94,7 @@ mkdir -p /data/typesdk_server/redis_data
 chown -R redis.redis /data/typesdk_server/redis_data
 cp /etc/redis.conf /etc/redis.conf.bak
 cat > /etc/redis.conf << EOF
-bind 127.0.0.1
+bind 0.0.0.0
 protected-mode yes
 port 6379
 tcp-backlog 511
@@ -162,4 +162,5 @@ ln -s /data/typesdk_server/SdkServer_free_git/node_modules/pm2/bin/pm2 /usr/bin/
 echo -e "\033[32m #####################################     staring server  ####################################### \033[0m"
 cd /data/typesdk_server/SdkServer_free_git/bin
 pm2 start www
-
+cd /data/typesdk_server/GameServerDemo/bin
+pm2 start GameServerDemo
